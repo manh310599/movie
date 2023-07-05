@@ -1,0 +1,2 @@
+const String accessTokenAuth = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYmZmY2QyZDlhODNmNjRlZTc3OTBiYmRkOGRlZjgzOCIsInN1YiI6IjY0OTE3MTk4MmY4ZDA5MDBjNjY3NjM4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-go7gWhd0drlDpOALVl9DxMAB77tZfnLQuuMpUcFIbU';
+const String apiKeyAuth = 'abffcd2d9a83f64ee7790bbdd8def838';
