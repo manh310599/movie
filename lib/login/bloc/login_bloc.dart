@@ -14,7 +14,7 @@ class LoginBloc extends Bloc<LoginEvent,LoginState>{
   LoginBloc():super(InitLoginState()){
     on<CheckInformationLoginEvent>((event, emit) => getToken(event, state, emit));
     on<CheckPermissionLoginEvent>((event, emit) => checkPermission(event, state, emit));
-    on<CreateSessionAndLogin>((event, emit) => createSessionLogin(event, state));
+    on<CreateSessionAndLogin>((event, emit) => createSessionLogin(event, state,emit));
   }
 
   String? tokendata;
@@ -47,7 +47,7 @@ class LoginBloc extends Bloc<LoginEvent,LoginState>{
     }
   }
 
-  Future<void> createSessionLogin (CreateSessionAndLogin event,LoginState state)async{
+  Future<void> createSessionLogin (CreateSessionAndLogin event,LoginState state,Emitter emit)async{
     final body = jsonEncode(<String,String>{
       "username": event.userName,
       "password": event.passWord,
@@ -59,7 +59,7 @@ class LoginBloc extends Bloc<LoginEvent,LoginState>{
       emit(LoadingLogin());
       final sesion = await http.post(Uri.parse('https://api.themoviedb.org/3/authentication/session/new'),headers: header,body: jsonEncode(<String,String>{'request_token':event.token}));
       final sessionCode  = Session.fromJson(jsonDecode(sesion.body));
-
+      isClosed ? debugPrint('đã close') : debugPrint('chưa close');
       emit(SessionIdCode(sessionCode.sessionId));
     }
     else{

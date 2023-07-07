@@ -9,8 +9,6 @@ import 'package:movie_app/login/ui/component/check_permission.dart';
 import 'package:movie_app/login/ui/component/register.dart';
 import 'package:movie_app/login/ui/component/reset_pass.dart';
 
-
-
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -23,17 +21,10 @@ class _LoginState extends State<Login> {
   late String? permission;
   final _user = TextEditingController();
   final _pass = TextEditingController();
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-
-  }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-
 
     return Scaffold(
       body: Theme(
@@ -49,8 +40,7 @@ class _LoginState extends State<Login> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/images/logo.png',
-                          height: width / 3),
+                      Image.asset('assets/images/logo.png', height: width / 3),
                       const SizedBox(
                         height: kSpacing,
                       ),
@@ -93,9 +83,7 @@ class _LoginState extends State<Login> {
                               suffixIcon: GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      hint == true
-                                          ? hint = false
-                                          : hint = true;
+                                      hint == true ? hint = false : hint = true;
                                     });
                                   },
                                   child: const Icon(
@@ -162,44 +150,30 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              listener: (context, state)  {
-                  print('state là ${state.toString()}');
+              listener: (context, state) {
+                print('state là ${state.toString()}');
                 if (state is NullCheck) {
                   ScaffoldMessenger.of(context).showSnackBar(warningToast(
                       'Cảnh báo', 'Bạn phải điền đầy đủ tài khoản mật khẩu'));
-                }
-                else if(state is GetTokenFail)
-                  {
-                    ScaffoldMessenger.of(context).showSnackBar(errorToast(
-                        'Lỗi', 'Không lấy được tokent của server'));
-                  }
-                else if (state is GetTokenState)
-                  {
-                    print('token ${state.token}');
-                    ScaffoldMessenger.of(context).showSnackBar(successToast(
-                        'Chúc mừng', 'Lấy token thành công'));
-                     Navigator.push<String>(context, MaterialPageRoute(builder: (context) => CheckPermission(token: state.token,userName: _user.text,passWord: _pass.text),));
+                } else if (state is GetTokenFail) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      errorToast('Lỗi', 'Không lấy được tokent của server'));
+                } else if (state is GetTokenState) {
+                  print('token ${state.token}');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      successToast('Chúc mừng', 'Lấy token thành công'));
+                  Navigator.push<String>(context, MaterialPageRoute(
+                    builder: (context) {
+                      return LoginProvider(
+                          child: CheckPermission(
+                              token: state.token,
+                              userName: _user.text,
+                              passWord: _pass.text));
+                    },
+                  ));
 
-                       //  context.read<LoginBloc>().add(CheckPermissionLoginEvent(permission!));
-
-
-                  }
-                else if (state is GetPermissionFaild)
-                  {
-
-
-                  }
-                else if (state is LoadingLogin)
-                {
-
-                  print('đã load');
-
-                }
-                else if (state is SessionIdCode)
-                  {
-                    ScaffoldMessenger.of(context).showSnackBar(errorToast(
-                        'Lỗi', 'Ủy quyền không thành công'));
-                  }
+                  //  context.read<LoginBloc>().add(CheckPermissionLoginEvent(permission!));
+                } else if (state is GetPermissionFaild) {}
               },
             ),
           )),
@@ -209,8 +183,7 @@ class _LoginState extends State<Login> {
         children: [
           const Text(
             'Bạn chưa có tài khoản? ',
-            style:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           GestureDetector(
             onTap: () {
@@ -224,8 +197,7 @@ class _LoginState extends State<Login> {
             child: const Text(
               'Đăng kí ngay',
               style: TextStyle(
-                  color: Colors.lightGreenAccent,
-                  fontWeight: FontWeight.bold),
+                  color: Colors.lightGreenAccent, fontWeight: FontWeight.bold),
             ),
           )
         ],
